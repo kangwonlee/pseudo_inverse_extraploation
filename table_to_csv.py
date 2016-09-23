@@ -16,7 +16,7 @@ def process_lines(txt_lines):
 
 
 def process_line(txt):
-    print(txt)
+    print(txt.strip())
 
 
 if __name__ == '__main__':
