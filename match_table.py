@@ -7,10 +7,13 @@ from table_to_csv import read_txt_lines
 def main(req_filename, point_filename):
     req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
 
+    # req lines -> req table
     req_table = get_req_table(req_lines)
     print_dict_list(req_table)
 
+    # point lines -> point table
     point_table = get_point_table(point_lines)
+    print_dict_list(point_table)
 
     match_table = build_match_table(req_table, point_table)
     print_dict_list(match_table)
@@ -93,14 +96,15 @@ def get_quote_format_string(item):
 
 
 def table_dict_list_to_string(table_dict, new_line=chr(10)):
+    return table_dict_to_string(table_dict, key_list_to_string, new_line)
+
+
+def table_dict_to_string(table_dict, line_converter, new_line):
     result = '{' + new_line
-
     for key_string, line_list in table_dict.iteritems():
-        result += key_list_to_string(key_string, line_list, new_line)
-
+        result += line_converter(key_string, line_list, new_line)
     result = result[:-1]
     result += (new_line + '}')
-
     return result
 
 
