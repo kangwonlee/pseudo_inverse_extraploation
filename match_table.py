@@ -5,7 +5,8 @@ from table_to_csv import read_txt_lines
 
 
 def main(req_filename, point_filename):
-    req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
+    req_lines = read_txt_lines(req_filename)
+    point_lines = read_txt_lines(point_filename, 'utf8')
 
     req_table = get_req_table(req_lines)
     print_dict_list(req_table)
@@ -13,11 +14,21 @@ def main(req_filename, point_filename):
     point_table = get_point_table(point_lines)
 
     match_table = build_match_table(req_table, point_table)
+    print_match_table(match_table, point_table)
+
+
+def print_match_table(match_table, point_table):
     for req_key, value in match_table.iteritems():
-        point_key = value[0][1]
-        similarity_point = value[0][0]
-        number = point_table[point_key]['number']
-        print('%s : %s (%s) = %4.2g' % (req_key, point_key, number, similarity_point))
+        line_string = make_match_table_row_string(req_key, value, point_table)
+        print(line_string)
+
+
+def make_match_table_row_string(req_key, point_list, point_table):
+    point_key = point_list[0][1]
+    similarity_point = point_list[0][0]
+    number = point_table[point_key]['number']
+    line_string = '%s : %s (%s) = %4.2g' % (req_key, point_key, number, similarity_point)
+    return line_string
 
 
 def build_match_table(req_table, point_table):
