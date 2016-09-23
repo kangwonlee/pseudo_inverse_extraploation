@@ -22,7 +22,10 @@ def process_line(txt):
     split_here = txt_strip.index(' ', len_txt - 18, len_txt) + 1
     name_txt = txt_strip[:split_here].strip()
     points_txt = txt_strip[split_here:].strip()
-    print('%s[%s]' % (name_txt, points_txt))
+
+    points_list = map(float, points_txt.split())
+
+    print(name_txt + str(points_list))
 
 
 if __name__ == '__main__':
