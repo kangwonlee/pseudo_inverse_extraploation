@@ -13,7 +13,11 @@ def main(req_filename, point_filename):
     point_table = get_point_table(point_lines)
 
     match_table = build_match_table(req_table, point_table)
-    print_dict_list(match_table)
+    for req_key, value in match_table.iteritems():
+        point_key = value[0][1]
+        similarity_point = value[0][0]
+        number = point_table[point_key]['number']
+        print('%s : %s (%s) = %4.2g' % (req_key, point_key, number, similarity_point))
 
 
 def build_match_table(req_table, point_table):
