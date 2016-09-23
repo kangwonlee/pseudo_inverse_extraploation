@@ -24,8 +24,12 @@ def print_match_table(match_table, point_table):
 
 
 def make_match_table_row_string(req_key, point_list, point_table):
-    point_list_item = point_list[0]
-    point_list_item_string = make_point_list_item_string(point_list_item, point_table)
+    point_list_item_string_list = []
+    for point_list_item in point_list:
+        point_list_item_string_list.append(make_point_list_item_string(point_list_item, point_table))
+
+    point_list_item_string = ', '.join(point_list_item_string_list)
+
     line_string = '%s : %s' % (req_key, point_list_item_string)
     return line_string
 
