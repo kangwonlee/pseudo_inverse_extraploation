@@ -29,7 +29,7 @@ def process_lines(txt_lines):
 
 
 def process_line(txt):
-    sep = ','
+    sep = chr(9)
 
     txt_strip = txt.strip()
     len_txt = len(txt)
