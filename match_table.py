@@ -25,20 +25,35 @@ def get_req_table(req_lines):
 def str_list_to_string(str_list):
     result = '['
     for item in str_list:
-        if ("'" not in item) and ('"' not in item):
-            format_string = "'%s', "
-        elif ("'" in item) and ('"' not in item):
-            format_string = '"%s", '
-        elif ("'" not in item) and ('"' in item):
-            format_string = "'%s', "
-        elif ("'" in item) and ('"' in item):
-            format_string = """'''%s''', """
-        else:
-            die('impossible quote mark')
-
-        result += format_string % item
+        result += wrap_quote(item)
 
     result = result[:-1] + ']'
+
+    return result
+
+
+def wrap_quote(item):
+    format_string = get_quote_format_string(item)
+    return format_string % item
+
+
+def get_quote_format_string(item):
+    if ("'" not in item) and ('"' not in item):
+        format_string = "'%s', "
+    elif ("'" in item) and ('"' not in item):
+        format_string = '"%s", '
+    elif ("'" not in item) and ('"' in item):
+        format_string = "'%s', "
+    elif ("'" in item) and ('"' in item):
+        format_string = """'''%s''', """
+    else:
+        die('impossible quote mark')
+    return format_string
+
+
+def table_dict_to_string(table_dict):
+    result = '{'
+    result += '}'
 
     return result
 
