@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-
+import difflib
 from table_to_csv import read_txt_lines
 
 
@@ -14,6 +14,11 @@ def main(req_filename, point_filename):
 
 def print_dict(dict):
     print(table_dict_to_string(dict))
+
+
+def similar(string_a, string_b):
+    # http://stackoverflow.com/questions/17388213/python-string-similarity-with-probability
+    return difflib.SequenceMatcher(None, string_a, string_b).ratio()
 
 
 def get_point_table(point_lines):
