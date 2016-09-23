@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import difflib
+
 from table_to_csv import read_txt_lines
 
 
@@ -21,10 +22,11 @@ def build_match_table(req_table, point_table):
     point_keys = point_table.keys()
 
     for req_key in req_keys:
-        row_result = {}
+        row_result = []
         for point_key in point_keys:
-            row_result[point_key] = similar(req_key, point_key)
-
+            row_result.append((similar(req_key, point_key), point_key))
+        row_result.sort()
+        row_result.reverse()
         result[req_key] = row_result
 
     return result
