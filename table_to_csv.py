@@ -12,12 +12,12 @@ def main(filename):
     write_csv(filename, result, 'cp949')
 
 
-def write_csv(filename, result, encoding):
+def write_csv(filename, result, encoding='cp949'):
     with io.open(get_csv_filename(filename), 'w', encoding=encoding) as wp:
         map(wp.write, result)
 
 
-def read_txt_lines(filename, encoding):
+def read_txt_lines(filename, encoding='cp949'):
     # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
     fp = io.open(filename, 'rt', encoding=encoding)
     txt_lines = fp.readlines()
