@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 from table_to_csv import read_txt_lines
+import sys
 
 
 def main(req_filename, table_filename):
@@ -20,6 +21,11 @@ def get_req_table(req_lines):
 
 def get_row_list(req_line, sep='\t'):
     return req_line.strip().split(sep)
+
+
+def die(reason):
+    print('Something Wrong : %s' % reason)
+    sys.exit(-1)
 
 
 if __name__ == '__main__':
