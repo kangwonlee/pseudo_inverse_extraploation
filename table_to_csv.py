@@ -3,7 +3,6 @@ import io
 
 
 def main(filename):
-    # Ref : Is 'encoding is an invalid keyword' error inevitable in python 2.x?, stackoverflow.com
     # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
     fp = io.open(filename, 'rt', encoding='cp949')
     txt_lines = fp.readlines()
@@ -22,10 +21,12 @@ def process_line(txt):
     split_here = txt_strip.index(' ', len_txt - 18, len_txt) + 1
     name_txt = txt_strip[:split_here].strip()
     points_txt = txt_strip[split_here:].strip()
+    # points_csv_txt = points_txt.replace(' ', ', ')
 
     points_list = map(float, points_txt.split())
+    points_csv_txt = ', '.join(map(str, points_list))
 
-    print(name_txt + str(points_list))
+    print(name_txt + ', ' + points_csv_txt)
 
 
 if __name__ == '__main__':
