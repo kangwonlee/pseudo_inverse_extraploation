@@ -6,7 +6,7 @@ from table_to_csv import read_txt_lines
 
 def main(req_filename, table_filename):
     req_lines, table_lines = read_txt_lines(req_filename), read_txt_lines(table_filename, 'utf8')
-    pprint.pprint(get_req_table(req_lines))
+    print(table_dict_to_string(get_req_table(req_lines)))
 
     for table_line in table_lines:
         print(table_line)
@@ -52,8 +52,15 @@ def get_quote_format_string(item):
 
 
 def table_dict_to_string(table_dict):
-    result = '{'
-    result += '}'
+    new_line = chr(10)
+    result = '{' + new_line
+
+    for key_string, line_list in table_dict.iteritems():
+        line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
+        result += line + new_line
+
+    result = result[:-1]
+    result += (new_line + '}')
 
     return result
 
