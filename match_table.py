@@ -1,9 +1,9 @@
+# -*- coding: cp949 -*-
 from table_to_csv import read_txt_lines
 
 
 def main(req_filename, table_filename):
-    req_lines = read_txt_lines(req_filename)
-    table_lines = read_txt_lines(table_filename, 'utf8')
+    req_lines, table_lines = read_txt_lines(req_filename), read_txt_lines(table_filename, 'utf8')
 
     for req_line in req_lines:
         print(req_line)
