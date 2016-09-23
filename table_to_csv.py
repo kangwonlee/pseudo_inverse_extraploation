@@ -29,6 +29,8 @@ def process_lines(txt_lines):
 
 
 def process_line(txt):
+    sep = ','
+
     txt_strip = txt.strip()
     len_txt = len(txt)
     split_here = txt_strip.index(' ', len_txt - 18, len_txt) + 1
@@ -37,9 +39,9 @@ def process_line(txt):
     # points_csv_txt = points_txt.replace(' ', ', ')
 
     points_list = map(float, points_txt.split())
-    points_csv_txt = ', '.join(map(str, points_list))
+    points_csv_txt = sep.join(map(str, points_list))
 
-    return name_txt + ', ' + points_csv_txt + chr(10)
+    return name_txt + sep + points_csv_txt + chr(10)
 
 
 if __name__ == '__main__':
