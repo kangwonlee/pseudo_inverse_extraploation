@@ -24,11 +24,18 @@ def print_match_table(match_table, point_table):
 
 
 def make_match_table_row_string(req_key, point_list, point_table):
-    point_key = point_list[0][1]
-    similarity_point = point_list[0][0]
-    number = point_table[point_key]['number']
-    line_string = '%s : %s (%s) = %4.2g' % (req_key, point_key, number, similarity_point)
+    point_list_item = point_list[0]
+    point_list_item_string = make_point_list_item_string(point_list_item, point_table)
+    line_string = '%s : %s' % (req_key, point_list_item_string)
     return line_string
+
+
+def make_point_list_item_string(point_list_item, point_table):
+    point_key = point_list_item[1]
+    similarity_point = point_list_item[0]
+    number = point_table[point_key]['number']
+    point_list_item_string = '%s (%s) = %4.2g' % (point_key, number, similarity_point)
+    return point_list_item_string
 
 
 def build_match_table(req_table, point_table):
