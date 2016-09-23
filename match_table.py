@@ -7,13 +7,13 @@ def main(req_filename, point_filename):
     req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
 
     req_table = get_req_table(req_lines)
-    print_dict(req_table)
-
-    print(table_dict_to_string(get_point_table(point_lines)))
+    print_dict_list(req_table)
 
 
-def print_dict(dict):
-    print(table_dict_to_string(dict))
+
+
+def print_dict_list(dict):
+    print(table_dict_list_to_string(dict))
 
 
 def similar(string_a, string_b):
@@ -73,7 +73,7 @@ def get_quote_format_string(item):
     return format_string
 
 
-def table_dict_to_string(table_dict):
+def table_dict_list_to_string(table_dict):
     new_line = chr(10)
     result = '{' + new_line
 
