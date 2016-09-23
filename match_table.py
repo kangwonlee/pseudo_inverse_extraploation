@@ -1,12 +1,12 @@
 # -*- coding: utf8 -*-
+import pprint
+
 from table_to_csv import read_txt_lines
-import sys
 
 
 def main(req_filename, table_filename):
     req_lines, table_lines = read_txt_lines(req_filename), read_txt_lines(table_filename, 'utf8')
-
-    get_req_table(req_lines)
+    pprint.pprint(get_req_table(req_lines))
 
     for table_line in table_lines:
         print(table_line)
@@ -16,7 +16,10 @@ def get_req_table(req_lines):
     result = {}
     for req_line in req_lines:
         req_row_list = get_row_list(req_line)
-        print(str_list_to_string(req_row_list))
+        result[req_row_list[0]] = req_row_list[1:]
+        # print(str_list_to_string(req_row_list))
+
+    return result
 
 
 def str_list_to_string(str_list):
@@ -45,6 +48,7 @@ def get_row_list(req_line, sep='\t'):
 
 
 def die(reason):
+    import sys
     print('Something Wrong : %s' % reason)
     sys.exit(-1)
 
