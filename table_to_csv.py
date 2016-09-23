@@ -16,7 +16,8 @@ def process_lines(txt_lines):
 
 
 def process_line(txt):
-    print(txt.strip())
+    txt_strip = txt.strip()
+    print('%s[%s]' % (txt_strip[:-15], txt_strip[-15:]))
 
 
 if __name__ == '__main__':
