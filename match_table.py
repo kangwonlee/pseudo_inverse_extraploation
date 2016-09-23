@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import difflib
+
 from table_to_csv import read_txt_lines
 
 
@@ -91,18 +92,21 @@ def get_quote_format_string(item):
     return format_string
 
 
-def table_dict_list_to_string(table_dict):
-    new_line = chr(10)
+def table_dict_list_to_string(table_dict, new_line=chr(10)):
     result = '{' + new_line
 
     for key_string, line_list in table_dict.iteritems():
-        line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
-        result += line + new_line
+        result += key_list_to_string(key_string, line_list, new_line)
 
     result = result[:-1]
     result += (new_line + '}')
 
     return result
+
+
+def key_list_to_string(key_string, line_list, new_line):
+    line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
+    return line + new_line
 
 
 def get_row_list(req_line, sep='\t'):
