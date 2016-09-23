@@ -7,9 +7,13 @@ def main(req_filename, point_filename):
     req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
 
     req_table = get_req_table(req_lines)
-    print(table_dict_to_string(req_table))
+    print_dict(req_table)
 
     print(table_dict_to_string(get_point_table(point_lines)))
+
+
+def print_dict(dict):
+    print(table_dict_to_string(dict))
 
 
 def get_point_table(point_lines):
