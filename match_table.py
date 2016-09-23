@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import difflib
+
 from table_to_csv import read_txt_lines
 
 
@@ -102,8 +103,7 @@ def table_dict_list_to_string(table_dict):
 
     for key_string, line_list in table_dict.iteritems():
         wrapped_key_string = wrap_quote(key_string)
-        repr_line_list = repr(line_list)
-        line = "%s: %s," % (wrapped_key_string, repr_line_list)
+        line = "%s: %r," % (wrapped_key_string, line_list)
         result += line + new_line
 
     result = result[:-1]
