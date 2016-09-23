@@ -4,16 +4,25 @@ import os
 
 
 def main(filename):
-    # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
-    fp = io.open(filename, 'rt', encoding='cp949')
-    txt_lines = fp.readlines()
-    fp.close()
+    txt_lines = read_txt_lines(filename, 'cp949')
 
     result = process_lines(txt_lines)
 
     # write to a csv file
-    with io.open(get_csv_filename(filename), 'w', encoding='cp949') as wp:
+    write_csv(filename, result, 'cp949')
+
+
+def write_csv(filename, result, encoding='cp949'):
+    with io.open(get_csv_filename(filename), 'w', encoding=encoding) as wp:
         map(wp.write, result)
+
+
+def read_txt_lines(filename, encoding='cp949'):
+    # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
+    fp = io.open(filename, 'rt', encoding=encoding)
+    txt_lines = fp.readlines()
+    fp.close()
+    return txt_lines
 
 
 def get_csv_filename(filename):
