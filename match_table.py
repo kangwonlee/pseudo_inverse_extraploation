@@ -12,6 +12,10 @@ def main(req_filename, table_filename):
         print(table_line)
 
 
+def get_row_list(req_line, sep='\t'):
+    return req_line.strip().split(sep)
+
+
 if __name__ == '__main__':
     import sys
     if 3 == len(sys.argv):
