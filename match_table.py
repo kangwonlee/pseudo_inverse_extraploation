@@ -3,16 +3,21 @@ import difflib
 
 from table_to_csv import read_txt_lines
 
+TAB = chr(9)
+
 
 def main(req_filename, point_filename):
+    # read files
     req_lines = read_txt_lines(req_filename)
     point_lines = read_txt_lines(point_filename, 'utf8')
 
+    # convert to tables
     req_table = get_req_table(req_lines)
     print_dict_list(req_table)
 
     point_table = get_point_table(point_lines)
 
+    # calculate match
     match_table = build_match_table(req_table, point_table)
     print_match_table(match_table, point_table)
 
@@ -23,14 +28,15 @@ def print_match_table(match_table, point_table):
         print(line_string)
 
 
+
 def make_match_table_row_string(req_key, point_list, point_table):
     point_list_item_string_list = []
     for point_list_item in point_list:
         point_list_item_string_list.append(make_point_list_item_string(point_list_item, point_table))
 
-    point_list_item_string = ', '.join(point_list_item_string_list)
+    point_list_item_string = (TAB + ' ').join(point_list_item_string_list)
 
-    line_string = '%s : %s' % (req_key, point_list_item_string)
+    line_string = '%s %s %s' % (req_key, TAB, point_list_item_string)
     return line_string
 
 
