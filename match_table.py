@@ -14,7 +14,8 @@ def main(req_filename, point_filename):
 
 def get_point_table(point_lines):
     for point_line in point_lines:
-        print(point_line)
+        point_row_list = get_row_list(point_line)
+        print(str_list_to_string(point_row_list))
 
 
 def get_req_table(req_lines):
