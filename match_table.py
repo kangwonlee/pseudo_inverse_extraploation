@@ -9,7 +9,25 @@ def main(req_filename, point_filename):
     req_table = get_req_table(req_lines)
     print_dict_list(req_table)
 
+    point_table = get_point_table(point_lines)
 
+    match_table = build_match_table(req_table, point_table)
+    print_dict_list(match_table)
+
+
+def build_match_table(req_table, point_table):
+    result = {}
+    req_keys = req_table.keys()
+    point_keys = point_table.keys()
+
+    for req_key in req_keys:
+        row_result = {}
+        for point_key in point_keys:
+            row_result[point_key] = similar(req_key, point_key)
+
+        result[req_key] = row_result
+
+    return result
 
 
 def print_dict_list(dict):
