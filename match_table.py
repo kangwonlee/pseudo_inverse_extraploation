@@ -3,6 +3,11 @@ import difflib
 from table_to_csv import read_txt_lines
 
 
+class ComplexStringValueDictionary(__builtins__.dict):
+    def __repr__(self):
+        return table_dict_list_to_string(self)
+
+
 def main(req_filename, point_filename):
     req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
 
@@ -21,7 +26,7 @@ def build_match_table(req_table, point_table):
     point_keys = point_table.keys()
 
     for req_key in req_keys:
-        row_result = {}
+        row_result = ComplexStringValueDictionary()
         for point_key in point_keys:
             row_result[point_key] = similar(req_key, point_key)
 
@@ -96,7 +101,9 @@ def table_dict_list_to_string(table_dict):
     result = '{' + new_line
 
     for key_string, line_list in table_dict.iteritems():
-        line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
+        wrapped_key_string = wrap_quote(key_string)
+        repr_line_list = repr(line_list)
+        line = "%s: %s," % (wrapped_key_string, repr_line_list)
         result += line + new_line
 
     result = result[:-1]
