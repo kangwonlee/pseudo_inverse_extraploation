@@ -1,13 +1,16 @@
 # -*- coding: cp949 -*-
+import io
 
 
 def main(filename):
-    with open(filename, 'rt') as fp:
-        txt_lines = fp.readlines()
+    # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
+    fp = io.open(filename, 'rt', encoding='cp949')
+    txt_lines = fp.readlines()
     process_lines(txt_lines)
 
 
 def process_lines(txt_lines):
+    # line loop
     for line in txt_lines:
         process_line(line)
 
