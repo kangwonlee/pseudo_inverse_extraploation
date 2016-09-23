@@ -1,18 +1,31 @@
 # -*- coding: cp949 -*-
 import io
+import os
 
 
 def main(filename):
     # http://stackoverflow.com/questions/25049962/is-encoding-is-an-invalid-keyword-error-inevitable-in-python-2-x
     fp = io.open(filename, 'rt', encoding='cp949')
     txt_lines = fp.readlines()
-    process_lines(txt_lines)
+    fp.close()
+
+    result = process_lines(txt_lines)
+
+    # write to a csv file
+    with io.open(get_csv_filename(filename), 'w', encoding='cp949') as wp:
+        map(wp.write, result)
+
+
+def get_csv_filename(filename):
+    filename_split_ext = os.path.splitext(filename)
+    csv_filename = filename_split_ext[0] + '.csv'
+    return csv_filename
 
 
 def process_lines(txt_lines):
     # line loop
-    for line in txt_lines:
-        process_line(line)
+    result = map(process_line, txt_lines)
+    return result
 
 
 def process_line(txt):
@@ -26,7 +39,7 @@ def process_line(txt):
     points_list = map(float, points_txt.split())
     points_csv_txt = ', '.join(map(str, points_list))
 
-    print(name_txt + ', ' + points_csv_txt)
+    return name_txt + ', ' + points_csv_txt + chr(10)
 
 
 if __name__ == '__main__':
