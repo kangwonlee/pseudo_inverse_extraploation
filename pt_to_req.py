@@ -17,6 +17,10 @@ def main(match_filename):
     match_table_to_dict(tab_separated_lines)
 
 
+def join_comma_space_re_group_map_helper(items):
+    return ', '.join(items[0])
+
+
 def match_table_to_dict(tab_separated_lines):
     result = {}
 
@@ -27,8 +31,11 @@ def match_table_to_dict(tab_separated_lines):
         values = tab_sep_line[1:]
         result[key] = []
 
-        for value in values:
-            print(point_search.findall(value))
+        row_list = map(point_search.findall, values)
+        cell_string_list = map(join_comma_space_re_group_map_helper, row_list)
+
+        row_string = ', '.join(cell_string_list)
+        print(row_string)
 
 
 def tab_separate(lines_list):
