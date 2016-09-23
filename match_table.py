@@ -16,7 +16,7 @@ def main(req_filename, point_filename):
     print_dict_list(point_table)
 
     match_table = build_match_table(req_table, point_table)
-    print_dict_list(match_table)
+    print_dict_dict(match_table)
 
 
 def build_match_table(req_table, point_table):
@@ -36,6 +36,10 @@ def build_match_table(req_table, point_table):
 
 def print_dict_list(dict):
     print(table_dict_list_to_string(dict))
+
+
+def print_dict_dict(dict):
+    print(table_dict_dict_to_string(dict))
 
 
 def similar(string_a, string_b):
@@ -99,6 +103,10 @@ def table_dict_list_to_string(table_dict, new_line=chr(10)):
     return table_dict_to_string(table_dict, key_list_to_string, new_line)
 
 
+def table_dict_dict_to_string(table_dict, new_line=chr(10)):
+    return table_dict_to_string(table_dict, key_dict_to_string, new_line)
+
+
 def table_dict_to_string(table_dict, line_converter, new_line):
     result = '{' + new_line
     for key_string, line_list in table_dict.iteritems():
@@ -110,6 +118,12 @@ def table_dict_to_string(table_dict, line_converter, new_line):
 
 def key_list_to_string(key_string, line_list, new_line):
     line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
+    return line + new_line
+
+
+def key_dict_to_string(key_string, value_dict, new_line):
+    value_dict_string = table_dict_list_to_string(value_dict, '')
+    line = "%s: %s," % (wrap_quote(key_string), value_dict_string)
     return line + new_line
 
 
