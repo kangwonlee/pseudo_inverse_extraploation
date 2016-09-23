@@ -1,15 +1,20 @@
 # -*- coding: utf8 -*-
-import pprint
 
 from table_to_csv import read_txt_lines
 
 
-def main(req_filename, table_filename):
-    req_lines, table_lines = read_txt_lines(req_filename), read_txt_lines(table_filename, 'utf8')
-    print(table_dict_to_string(get_req_table(req_lines)))
+def main(req_filename, point_filename):
+    req_lines, point_lines = read_txt_lines(req_filename), read_txt_lines(point_filename, 'utf8')
 
-    for table_line in table_lines:
-        print(table_line)
+    req_table = get_req_table(req_lines)
+    print(table_dict_to_string(req_table))
+
+    get_point_table(point_lines)
+
+
+def get_point_table(point_lines):
+    for point_line in point_lines:
+        print(point_line)
 
 
 def get_req_table(req_lines):
