@@ -29,6 +29,9 @@ def main(match_filename, feature_filename, label_filename):
     print(feature_array)
     print(label_array)
 
+    print(feature_array.shape)
+    print(label_array.shape)
+
 
 def get_field(selected_dict, key):
     def dict_get(dictionary):
