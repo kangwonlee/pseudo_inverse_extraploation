@@ -8,18 +8,24 @@ TAB = chr(9)
 
 def main(req_filename, point_filename):
     # read files
-    req_lines = read_txt_lines(req_filename)
-    point_lines = read_txt_lines(point_filename, 'utf8')
-
-    # convert to tables
-    req_table = get_req_table(req_lines)
-    print_dict_list(req_table)
-
-    point_table = get_point_table(point_lines)
+    req_table = read_req_table(req_filename)
+    point_table = read_point_table(point_filename)
 
     # calculate match
     match_table = build_match_table(req_table, point_table)
     print_match_table(match_table, point_table)
+
+
+def read_point_table(point_filename):
+    point_lines = read_txt_lines(point_filename, 'utf8')
+    point_table = get_point_table(point_lines)
+    return point_table
+
+
+def read_req_table(req_filename):
+    req_lines = read_txt_lines(req_filename)
+    req_table = get_req_table(req_lines)
+    return req_table
 
 
 def print_match_table(match_table, point_table):
