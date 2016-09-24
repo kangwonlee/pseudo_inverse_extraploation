@@ -22,6 +22,12 @@ def main(match_filename, feature_filename, label_filename):
     feature_table = match_table.read_point_table(feature_filename, match_table.get_point_table_number_key)
     label_table = match_table.read_req_table(label_filename)
 
+    selected_dict = join_features_labels(feature_table, label_table, transposed_table)
+
+    print(len(selected_dict))
+
+
+def join_features_labels(feature_table, label_table, transposed_table):
     selected_dict = {}
     for selected_k_v in transposed_table.iteritems():
         key_label = selected_k_v[0]
@@ -30,8 +36,9 @@ def main(match_filename, feature_filename, label_filename):
             'name': feature_table[key_label]['name'],
             'feature': map(float, feature_table[key_label]['points']),
             'label': float(label_table[bind_info['req_key'].strip()][0])}
-
         print(match_table.table_dict_list_to_string(selected_dict[key_label], new_line=' '))
+
+    return selected_dict
 
 
 def match_table_to_dict(tab_separated_lines):
