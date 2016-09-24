@@ -23,8 +23,8 @@ def main(match_filename, feature_filename, label_filename):
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
     # feature and label arrays
-    feature_array = numpy.array(get_field(selected_dict, 'feature'))
-    label_array = numpy.array(get_field(selected_dict, 'label'))
+    feature_array = get_field_array(selected_dict, 'feature')
+    label_array = get_field_array(selected_dict, 'label')
     print(feature_array)
     print(label_array)
     print(feature_array.shape)
@@ -38,6 +38,10 @@ def main(match_filename, feature_filename, label_filename):
 
     print(label_array - y_hat_mat.T)
     print(w_list)
+
+
+def get_field_array(selected_dict, field_name):
+    return numpy.array(get_field(selected_dict, field_name))
 
 
 def estimate(feature_rows, weight, bias):
