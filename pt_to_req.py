@@ -29,7 +29,7 @@ def main(match_filename, feature_filename, label_filename):
         selected_dict[key_label] = {
             'name': feature_table[key_label]['name'],
             'feature': map(float, feature_table[key_label]['points']),
-            'label': map(float, label_table[bind_info['req_key'].strip()])}
+            'label': float(label_table[bind_info['req_key'].strip()][0])}
 
         print(match_table.table_dict_list_to_string(selected_dict[key_label], new_line=' '))
 
