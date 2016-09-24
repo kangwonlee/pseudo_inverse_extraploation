@@ -37,6 +37,7 @@ def main(match_filename, feature_filename, label_filename):
     print(y_hat_mat.T)
 
     print(label_array - y_hat_mat.T)
+    print(w_list)
 
 
 def estimate(feature_rows, weight, bias):
