@@ -32,16 +32,18 @@ def main(match_filename, feature_filename, label_filename):
 
     w_list, bias = get_param(feature_array, label_array)
 
-    y_hat = estimate(feature_array, w_list, bias)
+    y_hat_mat = estimate(feature_array, w_list, bias)
     print(label_array)
-    print(numpy.matrix(y_hat).squeeze().tolist())
+    print(y_hat_mat.T)
+
+    print(label_array - y_hat_mat.T)
 
 
 def estimate(feature_rows, weight, bias):
     feature_mat = numpy.matrix(feature_rows)
     w_mat = numpy.matrix(weight)
 
-    return (feature_mat * w_mat + bias).tolist()
+    return feature_mat * w_mat + bias
 
 
 def get_param(feature_array, label_array):
