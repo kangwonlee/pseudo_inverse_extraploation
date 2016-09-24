@@ -39,9 +39,15 @@ def main(match_filename, feature_filename, label_filename):
     print(label_array - y_hat_mat.T)
     print(w_list)
 
+    apply_estimate(feature_table, w_list, bias)
+
 
 def get_field_array(selected_dict, field_name):
     return numpy.array(get_field(selected_dict, field_name))
+
+
+def apply_estimate(feature_table, weight, bias):
+    match_table.print_dict_list(feature_table)
 
 
 def estimate(feature_rows, weight, bias):
