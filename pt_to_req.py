@@ -22,24 +22,7 @@ def main(match_filename, feature_filename, label_filename):
     # associate selected features and labels
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
-    # feature and label arrays
-    number_list, feature_list, label_list, name_list = [], [], [], []
-    for number in selected_dict.iterkeys():
-        number_list.append(number)
-        feature_list.append(selected_dict[number]['feature'])
-        label_list.append(selected_dict[number]['label'])
-        name_list.append(selected_dict[number]['name'])
-
-    feature_array = numpy.array(feature_list)
-    label_array = numpy.array(label_list)
-    print(feature_array)
-    print(label_array)
-    print(feature_array.shape)
-    print(label_array.shape)
-
-    w_list, bias = get_param(feature_array, label_array)
-
-    y_hat_mat = estimate(feature_array, w_list, bias)
+    bias, name_list, number_list, w_list, y_hat_mat = linear_estimator(selected_dict)
 
     formatter = TAB.join(['%s', '%s', '%g'])
 
@@ -51,6 +34,25 @@ def main(match_filename, feature_filename, label_filename):
     print(w_list)
 
     apply_estimate(feature_table, w_list, bias)
+
+
+def linear_estimator(selected_dict):
+    # feature and label arrays
+    number_list, feature_list, label_list, name_list = [], [], [], []
+    for number in selected_dict.iterkeys():
+        number_list.append(number)
+        feature_list.append(selected_dict[number]['feature'])
+        label_list.append(selected_dict[number]['label'])
+        name_list.append(selected_dict[number]['name'])
+    feature_array = numpy.array(feature_list)
+    label_array = numpy.array(label_list)
+    print(feature_array)
+    print(label_array)
+    print(feature_array.shape)
+    print(label_array.shape)
+    w_list, bias = get_param(feature_array, label_array)
+    y_hat_mat = estimate(feature_array, w_list, bias)
+    return bias, name_list, number_list, w_list, y_hat_mat
 
 
 def get_field_array(selected_dict, field_name):
