@@ -46,6 +46,14 @@ def linear_estimator(selected_dict):
         name_list.append(selected_dict[number]['name'])
     feature_array = numpy.array(feature_list)
     label_array = numpy.array(label_list)
+
+    formatter = TAB.join(['%s', '%s', '%r'])
+
+    print('selected label'.ljust(60, '*'))
+    for number, name, label in zip(number_list, name_list, label_list):
+        print(formatter % (number, name, label))
+    print('end selected label'.ljust(60, '*'))
+
     print(feature_array)
     print(label_array)
     print(feature_array.shape)
