@@ -1,6 +1,7 @@
 # -*- coding: cp949 -*-
 import io
 import os
+import my_string
 
 
 def main(filename):
@@ -8,7 +9,6 @@ def main(filename):
 
     result = process_lines(txt_lines)
 
-    # write to a csv file
     write_csv(filename, result, 'cp949')
 
 
@@ -22,7 +22,7 @@ def read_txt_lines(filename, encoding='cp949'):
     fp = io.open(filename, 'rt', encoding=encoding)
     txt_lines = fp.readlines()
     fp.close()
-    return txt_lines
+    return map(my_string.my_str, map(unicode, txt_lines))
 
 
 def get_csv_filename(filename):

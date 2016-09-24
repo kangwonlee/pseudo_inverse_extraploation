@@ -11,6 +11,7 @@ TAB = chr(9)
 
 def main(req_filename, point_filename):
     req_table = read_req_table(req_filename)
+    print(req_table)
     point_table = read_point_table(point_filename)
 
     # calculate match

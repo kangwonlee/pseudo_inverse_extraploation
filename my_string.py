@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-class my_str(str):
+class my_str(unicode):
     def __repr__(self):
         repr_sample = super(my_str, self).__repr__()
         if repr_sample.startswith('"""'):
