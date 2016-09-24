@@ -8,18 +8,37 @@ TAB = chr(9)
 
 def main(req_filename, point_filename):
     # read files
-    req_lines = read_txt_lines(req_filename)
-    point_lines = read_txt_lines(point_filename, 'utf8')
-
-    # convert to tables
-    req_table = get_req_table(req_lines)
-    print_dict_list(req_table)
-
-    point_table = get_point_table(point_lines)
+    req_table = read_req_table(req_filename)
+    point_table = read_point_table(point_filename)
 
     # calculate match
     match_table = build_match_table(req_table, point_table)
     print_match_table(match_table, point_table)
+
+
+def get_point_table_name_key(point_lines):
+    result = {}
+    for point_line in point_lines:
+        point_row_list = get_row_list(point_line)
+        result[point_row_list[2]] = {
+            'number': point_row_list[0],
+            'points': point_row_list[3:],
+        }
+        # print(str_list_to_string(point_row_list))
+
+    return result
+
+
+def read_point_table(point_filename, table_converter=get_point_table_name_key):
+    point_lines = read_txt_lines(point_filename, 'utf8')
+    point_table = table_converter(point_lines)
+    return point_table
+
+
+def read_req_table(req_filename):
+    req_lines = read_txt_lines(req_filename)
+    req_table = get_req_table(req_lines)
+    return req_table
 
 
 def print_match_table(match_table, point_table):
@@ -72,12 +91,12 @@ def similar(string_a, string_b):
     return difflib.SequenceMatcher(None, string_a, string_b).ratio()
 
 
-def get_point_table(point_lines):
+def get_point_table_number_key(point_lines):
     result = {}
     for point_line in point_lines:
         point_row_list = get_row_list(point_line)
-        result[point_row_list[2]] = {
-            'number': point_row_list[0],
+        result[point_row_list[0]] = {
+            'name': point_row_list[2],
             'points': point_row_list[3:],
         }
         # print(str_list_to_string(point_row_list))
@@ -95,14 +114,14 @@ def get_req_table(req_lines):
     return result
 
 
-def str_list_to_string(str_list):
-    result = '['
-    for item in str_list:
-        result += wrap_quote(item)
+def str_list_to_string(str_list, sep=', '):
+    result_list = map(wrap_quote, str_list)
 
-    result = result[:-1] + ']'
+    result_txt = sep.join(result_list)
 
-    return result
+    result_txt_bracket = '[%s]' % result_txt
+
+    return result_txt_bracket
 
 
 def wrap_quote(item):
@@ -112,30 +131,34 @@ def wrap_quote(item):
 
 def get_quote_format_string(item):
     if ("'" not in item) and ('"' not in item):
-        format_string = "'%s', "
+        format_string = "'%s'"
     elif ("'" in item) and ('"' not in item):
-        format_string = '"%s", '
+        format_string = '"%s"'
     elif ("'" not in item) and ('"' in item):
-        format_string = "'%s', "
+        format_string = "'%s'"
     elif ("'" in item) and ('"' in item):
-        format_string = """'''%s''', """
+        format_string = """'''%s'''"""
     else:
         die('impossible quote mark')
     return format_string
 
 
-def table_dict_list_to_string(table_dict):
-    new_line = chr(10)
-    result = '{' + new_line
+def table_dict_list_to_string(table_dict, new_line=chr(10)):
+    def k_v_to_string(k_v):
+        key_string, line_list = k_v
+        return "%s: %s," % (wrap_quote(key_string), line_list)
 
-    for key_string, line_list in table_dict.iteritems():
-        line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
-        result += line + new_line
+    # convert key value pair to string
+    result_list = map(k_v_to_string, table_dict.iteritems())
 
-    result = result[:-1]
-    result += (new_line + '}')
+    # opening and closing of dictionary
+    result_list.insert(0, '{')
+    result_list.append('}')
 
-    return result
+    # assemble result text
+    result_txt = new_line.join(result_list)
+
+    return result_txt
 
 
 def get_row_list(req_line, sep='\t'):

@@ -1,23 +1,44 @@
 # -*- coding: utf8 -*-
 import re
 
-from match_table import str_list_to_string, wrap_quote
+import match_table
 from table_to_csv import read_txt_lines
 
 TAB = chr(9)
 CR = chr(10)
 
 
-def main(match_filename):
+def main(match_filename, feature_filename, label_filename):
     lines = read_txt_lines(match_filename, 'utf8')
     
     tab_separated_lines = tab_separate(lines)
 
-    for tab_sep_line in tab_separated_lines:
-        print(str_list_to_string(tab_sep_line))
+    # for tab_sep_line in tab_separated_lines:
+    #     print(match_table.str_list_to_string(tab_sep_line))
 
     transposed_table = match_table_to_dict(tab_separated_lines)
-    print_dict_dict(transposed_table)
+    # print_dict_dict(transposed_table)
+
+    feature_table = match_table.read_point_table(feature_filename, match_table.get_point_table_number_key)
+    label_table = match_table.read_req_table(label_filename)
+
+    selected_dict = join_features_labels(feature_table, label_table, transposed_table)
+
+    print(len(selected_dict))
+
+
+def join_features_labels(feature_table, label_table, transposed_table):
+    selected_dict = {}
+    for selected_k_v in transposed_table.iteritems():
+        key_label = selected_k_v[0]
+        bind_info = selected_k_v[1]
+        selected_dict[key_label] = {
+            'name': feature_table[key_label]['name'],
+            'feature': map(float, feature_table[key_label]['points']),
+            'label': float(label_table[bind_info['req_key'].strip()][0])}
+        print(match_table.table_dict_list_to_string(selected_dict[key_label], new_line=' '))
+
+    return selected_dict
 
 
 def match_table_to_dict(tab_separated_lines):
@@ -58,7 +79,7 @@ def print_dict_dict(dict_dict):
 
 def dict_to_string(tuple_key_dict):
     def key_value_to_string(k_v):
-        return ': '.join([wrap_quote(k_v[0]), k_v[1]])
+        return ': '.join([match_table.wrap_quote(k_v[0]), k_v[1]])
 
     key = tuple_key_dict[0]
     dict = tuple_key_dict[1]
@@ -67,7 +88,7 @@ def dict_to_string(tuple_key_dict):
 
     dict_string = ', '.join(result_list)
 
-    result_string = '{%s: {%s}}' % (wrap_quote(key), dict_string)
+    result_string = '{%s: {%s}}' % (match_table.wrap_quote(key), dict_string)
 
     return result_string
 
@@ -85,5 +106,5 @@ if __name__ == '__main__':
 
     import sys
 
-    if 2 == len(sys.argv):
-        main(sys.argv[1])
+    if 4 == len(sys.argv):
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
