@@ -23,8 +23,15 @@ def main(match_filename, feature_filename, label_filename):
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
     # feature and label arrays
-    feature_array = get_field_array(selected_dict, 'feature')
-    label_array = get_field_array(selected_dict, 'label')
+    number_list, feature_list, label_list, name_list = [], [], [], []
+    for number in selected_dict.iterkeys():
+        number_list.append(number)
+        feature_list.append(selected_dict[number]['feature'])
+        label_list.append(selected_dict[number]['label'])
+        name_list.append(selected_dict[number]['name'])
+
+    feature_array = numpy.array(feature_list)
+    label_array = numpy.array(label_list)
     print(feature_array)
     print(label_array)
     print(feature_array.shape)
