@@ -22,26 +22,76 @@ def main(match_filename, feature_filename, label_filename):
     # associate selected features and labels
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
+    bias, name_list, number_list, w_list, y_hat_mat = linear_estimator(selected_dict)
+
+    formatter = TAB.join(['%s', '%s', '%g'])
+
+    print('selected estimation'.ljust(60, '*'))
+    for number, name, y_hat in zip(number_list, name_list, y_hat_mat.tolist()):
+        print(formatter % (number, name, y_hat[0]))
+    print('end selected estimation'.ljust(60, '*'))
+
+    print(w_list)
+
+    apply_estimate(feature_table, w_list, bias)
+
+
+def linear_estimator(selected_dict):
     # feature and label arrays
-    feature_array = get_field_array(selected_dict, 'feature')
-    label_array = get_field_array(selected_dict, 'label')
+    number_list, feature_list, label_list, name_list = [], [], [], []
+    for number in selected_dict.iterkeys():
+        number_list.append(number)
+        feature_list.append(selected_dict[number]['feature'])
+        label_list.append(selected_dict[number]['label'])
+        name_list.append(selected_dict[number]['name'])
+    feature_array = numpy.array(feature_list)
+    label_array = numpy.array(label_list)
+
+    formatter = TAB.join(['%s', '%s', '%r'])
+
+    print('selected label'.ljust(60, '*'))
+    for number, name, label in zip(number_list, name_list, label_list):
+        print(formatter % (number, name, label))
+    print('end selected label'.ljust(60, '*'))
+
     print(feature_array)
     print(label_array)
     print(feature_array.shape)
     print(label_array.shape)
-
     w_list, bias = get_param(feature_array, label_array)
-
     y_hat_mat = estimate(feature_array, w_list, bias)
-    print(label_array)
-    print(y_hat_mat.T)
-
-    print(label_array - y_hat_mat.T)
-    print(w_list)
+    return bias, name_list, number_list, w_list, y_hat_mat
 
 
 def get_field_array(selected_dict, field_name):
     return numpy.array(get_field(selected_dict, field_name))
+
+
+def apply_estimate(feature_table, weight, bias):
+    match_table.print_dict_list(feature_table)
+
+    feature_list, number_list, name_list = [], [], []
+
+    for number in feature_table.iterkeys():
+        number_list.append(number)
+        name_list.append(feature_table[number]['name'])
+        feature_list.append(feature_table[number]['points'])
+
+    feature_mat = numpy.matrix(feature_list, dtype=float)
+
+    w_mat = numpy.matrix(weight)
+
+    y_hat_mat = feature_mat * w_mat + bias
+    print(feature_mat.shape)
+    print(w_mat.shape)
+    print(y_hat_mat.shape)
+
+    formatter = TAB.join(('%s', '%s', '%g'))
+
+    for number, name, y_hat in zip(number_list, name_list, y_hat_mat.tolist()):
+        print(formatter % (number, name, y_hat[0]))
+
+    return y_hat_mat
 
 
 def estimate(feature_rows, weight, bias):
