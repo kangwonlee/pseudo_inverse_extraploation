@@ -91,6 +91,19 @@ def get_point_table_name_key(point_lines):
     return result
 
 
+def get_point_table_number_key(point_lines):
+    result = {}
+    for point_line in point_lines:
+        point_row_list = get_row_list(point_line)
+        result[point_row_list[0]] = {
+            'name': point_row_list[2],
+            'points': point_row_list[3:],
+        }
+        # print(str_list_to_string(point_row_list))
+
+    return result
+
+
 def get_req_table(req_lines):
     result = {}
     for req_line in req_lines:
