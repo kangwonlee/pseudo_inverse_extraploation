@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 import re
 
-from match_table import str_list_to_string, wrap_quote
+import match_table
 from table_to_csv import read_txt_lines
 
 TAB = chr(9)
@@ -14,7 +14,7 @@ def main(match_filename):
     tab_separated_lines = tab_separate(lines)
 
     for tab_sep_line in tab_separated_lines:
-        print(str_list_to_string(tab_sep_line))
+        print(match_table.str_list_to_string(tab_sep_line))
 
     transposed_table = match_table_to_dict(tab_separated_lines)
     print_dict_dict(transposed_table)
@@ -58,7 +58,7 @@ def print_dict_dict(dict_dict):
 
 def dict_to_string(tuple_key_dict):
     def key_value_to_string(k_v):
-        return ': '.join([wrap_quote(k_v[0]), k_v[1]])
+        return ': '.join([match_table.wrap_quote(k_v[0]), k_v[1]])
 
     key = tuple_key_dict[0]
     dict = tuple_key_dict[1]
@@ -67,7 +67,7 @@ def dict_to_string(tuple_key_dict):
 
     dict_string = ', '.join(result_list)
 
-    result_string = '{%s: {%s}}' % (wrap_quote(key), dict_string)
+    result_string = '{%s: {%s}}' % (match_table.wrap_quote(key), dict_string)
 
     return result_string
 
