@@ -8,7 +8,7 @@ TAB = chr(9)
 CR = chr(10)
 
 
-def main(match_filename):
+def main(match_filename, feature_filename, label_filename):
     lines = read_txt_lines(match_filename, 'utf8')
     
     tab_separated_lines = tab_separate(lines)
@@ -18,6 +18,9 @@ def main(match_filename):
 
     transposed_table = match_table_to_dict(tab_separated_lines)
     print_dict_dict(transposed_table)
+
+    feature_table = match_table.read_point_table(feature_filename, match_table.get_point_table_number_key)
+    label_table = match_table.read_req_table(label_filename)
 
 
 def match_table_to_dict(tab_separated_lines):
@@ -85,5 +88,5 @@ if __name__ == '__main__':
 
     import sys
 
-    if 2 == len(sys.argv):
-        main(sys.argv[1])
+    if 4 == len(sys.argv):
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
