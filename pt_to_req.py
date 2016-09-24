@@ -1,14 +1,16 @@
 # -*- coding: utf8 -*-
 import re
 
+import numpy
+
 import match_table
 from table_to_csv import read_txt_lines
 
-TAB = chr(9)
-CR = chr(10)
+TAB, CR = chr(9), chr(10)
 
 
 def main(match_filename, feature_filename, label_filename):
+
     lines = read_txt_lines(match_filename, 'utf8')
     
     tab_separated_lines = tab_separate(lines)
@@ -24,7 +26,18 @@ def main(match_filename, feature_filename, label_filename):
 
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
-    print(len(selected_dict))
+    feature_array = numpy.array(get_field(selected_dict, 'feature'))
+    label_array = numpy.array(get_field(selected_dict, 'label'))
+
+    print(feature_array)
+    print(label_array)
+
+
+def get_field(selected_dict, key):
+    def dict_get(dictionary):
+        return dictionary.get(key, None)
+
+    return map(dict_get, selected_dict.itervalues())
 
 
 def join_features_labels(feature_table, label_table, transposed_table):
