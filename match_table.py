@@ -114,30 +114,30 @@ def get_req_table(req_lines):
     return result
 
 
-def str_list_to_string(str_list):
-    result = '['
-    for item in str_list:
-        result += wrap_quote_comma(item)
+def str_list_to_string(str_list, sep=', '):
+    result_list = map(wrap_quote, str_list)
 
-    result = result[:-1] + ']'
+    result_txt = sep.join(result_list)
 
-    return result
+    result_txt_bracket = '[%s]' % result_txt
+
+    return result_txt_bracket
 
 
-def wrap_quote_comma(item):
-    format_string = get_quote_comma_format_string(item)
+def wrap_quote(item):
+    format_string = get_quote_format_string(item)
     return format_string % item
 
 
-def get_quote_comma_format_string(item):
+def get_quote_format_string(item):
     if ("'" not in item) and ('"' not in item):
-        format_string = "'%s', "
+        format_string = "'%s'"
     elif ("'" in item) and ('"' not in item):
-        format_string = '"%s", '
+        format_string = '"%s"'
     elif ("'" not in item) and ('"' in item):
-        format_string = "'%s', "
+        format_string = "'%s'"
     elif ("'" in item) and ('"' in item):
-        format_string = """'''%s''', """
+        format_string = """'''%s'''"""
     else:
         die('impossible quote mark')
     return format_string
@@ -146,7 +146,7 @@ def get_quote_comma_format_string(item):
 def table_dict_list_to_string(table_dict, new_line=chr(10)):
     def k_v_to_string(k_v):
         key_string, line_list = k_v
-        return "%s: %s," % (wrap_quote_comma(key_string), line_list)
+        return "%s: %s," % (wrap_quote(key_string), line_list)
 
     # convert key value pair to string
     result_list = map(k_v_to_string, table_dict.iteritems())
