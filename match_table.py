@@ -16,9 +16,22 @@ def main(req_filename, point_filename):
     print_match_table(match_table, point_table)
 
 
-def read_point_table(point_filename):
+def get_point_table_name_key(point_lines):
+    result = {}
+    for point_line in point_lines:
+        point_row_list = get_row_list(point_line)
+        result[point_row_list[2]] = {
+            'number': point_row_list[0],
+            'points': point_row_list[3:],
+        }
+        # print(str_list_to_string(point_row_list))
+
+    return result
+
+
+def read_point_table(point_filename, table_converter=get_point_table_name_key):
     point_lines = read_txt_lines(point_filename, 'utf8')
-    point_table = get_point_table_name_key(point_lines)
+    point_table = table_converter(point_lines)
     return point_table
 
 
@@ -76,19 +89,6 @@ def print_dict_list(dict):
 def similar(string_a, string_b):
     # http://stackoverflow.com/questions/17388213/python-string-similarity-with-probability
     return difflib.SequenceMatcher(None, string_a, string_b).ratio()
-
-
-def get_point_table_name_key(point_lines):
-    result = {}
-    for point_line in point_lines:
-        point_row_list = get_row_list(point_line)
-        result[point_row_list[2]] = {
-            'number': point_row_list[0],
-            'points': point_row_list[3:],
-        }
-        # print(str_list_to_string(point_row_list))
-
-    return result
 
 
 def get_point_table_number_key(point_lines):
