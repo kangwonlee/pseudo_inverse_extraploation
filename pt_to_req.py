@@ -28,8 +28,8 @@ def main(match_filename, feature_filename, label_filename):
         bind_info = selected_k_v[1]
         selected_dict[key_label] = {
             'name': feature_table[key_label]['name'],
-            'feature': feature_table[key_label]['points'],
-            'label': label_table[bind_info['req_key'].strip()]}
+            'feature': map(float, feature_table[key_label]['points']),
+            'label': map(float, label_table[bind_info['req_key'].strip()])}
 
         print(match_table.table_dict_list_to_string(selected_dict[key_label], new_line=' '))
 
