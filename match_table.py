@@ -6,8 +6,10 @@ from table_to_csv import read_txt_lines
 TAB = chr(9)
 
 
+# TODO : repr safe unicode string
+
+
 def main(req_filename, point_filename):
-    # read files
     req_table = read_req_table(req_filename)
     point_table = read_point_table(point_filename)
 
