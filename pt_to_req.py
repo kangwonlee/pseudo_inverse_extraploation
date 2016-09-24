@@ -32,6 +32,10 @@ def main(match_filename, feature_filename, label_filename):
     print(feature_array.shape)
     print(label_array.shape)
 
+    # add a column of 1 for bias
+    feature_1_array = numpy.concatenate((feature_array, numpy.ones((feature_array.shape[0], 1))), axis=1)
+    print(feature_1_array.shape)
+
 
 def get_field(selected_dict, key):
     def dict_get(dictionary):
