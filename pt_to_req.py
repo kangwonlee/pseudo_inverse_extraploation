@@ -13,14 +13,25 @@ def main(match_filename, feature_filename, label_filename):
     
     tab_separated_lines = tab_separate(lines)
 
-    for tab_sep_line in tab_separated_lines:
-        print(match_table.str_list_to_string(tab_sep_line))
+    # for tab_sep_line in tab_separated_lines:
+    #     print(match_table.str_list_to_string(tab_sep_line))
 
     transposed_table = match_table_to_dict(tab_separated_lines)
-    print_dict_dict(transposed_table)
+    # print_dict_dict(transposed_table)
 
     feature_table = match_table.read_point_table(feature_filename, match_table.get_point_table_number_key)
     label_table = match_table.read_req_table(label_filename)
+
+    selected_dict = {}
+    for selected_k_v in transposed_table.iteritems():
+        key_label = selected_k_v[0]
+        bind_info = selected_k_v[1]
+        selected_dict[key_label] = {
+            'name': feature_table[key_label]['name'],
+            'feature': feature_table[key_label]['points'],
+            'label': label_table[bind_info['req_key'].strip()]}
+
+        print(match_table.table_dict_list_to_string(selected_dict[key_label], new_line=' '))
 
 
 def match_table_to_dict(tab_separated_lines):
