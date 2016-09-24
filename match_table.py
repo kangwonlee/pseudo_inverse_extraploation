@@ -18,7 +18,7 @@ def main(req_filename, point_filename):
 
 def read_point_table(point_filename):
     point_lines = read_txt_lines(point_filename, 'utf8')
-    point_table = get_point_table(point_lines)
+    point_table = get_point_table_name_key(point_lines)
     return point_table
 
 
@@ -78,7 +78,7 @@ def similar(string_a, string_b):
     return difflib.SequenceMatcher(None, string_a, string_b).ratio()
 
 
-def get_point_table(point_lines):
+def get_point_table_name_key(point_lines):
     result = {}
     for point_line in point_lines:
         point_row_list = get_row_list(point_line)
