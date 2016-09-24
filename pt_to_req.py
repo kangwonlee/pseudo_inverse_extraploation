@@ -25,16 +25,51 @@ def main(match_filename, feature_filename, label_filename):
     # feature and label arrays
     feature_array = numpy.array(get_field(selected_dict, 'feature'))
     label_array = numpy.array(get_field(selected_dict, 'label'))
-
     print(feature_array)
     print(label_array)
-
     print(feature_array.shape)
     print(label_array.shape)
 
+    w_list, bias = get_param(feature_array, label_array)
+
+    y_hat = estimate(feature_array, w_list, bias)
+    print(label_array)
+    print(numpy.matrix(y_hat).squeeze().tolist())
+
+
+def estimate(feature_rows, weight, bias):
+    feature_mat = numpy.matrix(feature_rows)
+    w_mat = numpy.matrix(weight)
+
+    return (feature_mat * w_mat + bias).tolist()
+
+
+def get_param(feature_array, label_array):
+    """
+    model : y_(nx1) = X_(nxm) w_(mx1)
+    (X' X)_inv X' y_(nx1) = (X' X)_inv X' X w_(mx1)
+    w_(mx1) = (X' X)_inv X' y_(nx1)
+
+    :param feature_array:
+    :param label_array:
+    :return:
+    """
     # add a column of 1 for bias
     feature_1_array = numpy.concatenate((feature_array, numpy.ones((feature_array.shape[0], 1))), axis=1)
     print(feature_1_array.shape)
+
+    feature_1_mat = numpy.matrix(feature_1_array)
+    label_mat = numpy.matrix(label_array).T
+    xt_x = feature_1_mat.T * feature_1_array
+    xt_x_inv = xt_x.I
+    expect_identity = xt_x_inv * xt_x
+    left_inv = xt_x_inv * feature_1_mat.T
+    w_1 = left_inv * label_mat
+    w_1_list = w_1.tolist()
+    w_list = w_1_list[:-1]
+    bias = w_1_list[-1]
+
+    return w_list, bias
 
 
 def get_field(selected_dict, key):
