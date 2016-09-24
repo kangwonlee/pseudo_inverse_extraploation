@@ -28,7 +28,6 @@ def print_match_table(match_table, point_table):
         print(line_string)
 
 
-
 def make_match_table_row_string(req_key, point_list, point_table):
     point_list_item_string_list = []
     for point_list_item in point_list:
