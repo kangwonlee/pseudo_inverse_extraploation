@@ -10,22 +10,19 @@ TAB, CR = chr(9), chr(10)
 
 
 def main(match_filename, feature_filename, label_filename):
-
+    # read and prepare matching data
     lines = read_txt_lines(match_filename, 'utf8')
-    
     tab_separated_lines = tab_separate(lines)
-
-    # for tab_sep_line in tab_separated_lines:
-    #     print(match_table.str_list_to_string(tab_sep_line))
-
     transposed_table = match_table_to_dict(tab_separated_lines)
-    # print_dict_dict(transposed_table)
 
+    # read & prepare feature and label tables
     feature_table = match_table.read_point_table(feature_filename, match_table.get_point_table_number_key)
     label_table = match_table.read_req_table(label_filename)
 
+    # associate selected features and labels
     selected_dict = join_features_labels(feature_table, label_table, transposed_table)
 
+    # feature and label arrays
     feature_array = numpy.array(get_field(selected_dict, 'feature'))
     label_array = numpy.array(get_field(selected_dict, 'label'))
 
