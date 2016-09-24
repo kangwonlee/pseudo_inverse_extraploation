@@ -40,10 +40,14 @@ def main(match_filename, feature_filename, label_filename):
     w_list, bias = get_param(feature_array, label_array)
 
     y_hat_mat = estimate(feature_array, w_list, bias)
-    print(label_array)
-    print(y_hat_mat.T)
 
-    print(label_array - y_hat_mat.T)
+    formatter = TAB.join(['%s', '%s', '%g'])
+
+    print('selected estimation'.ljust(60, '*'))
+    for number, name, y_hat in zip(number_list, name_list, y_hat_mat.tolist()):
+        print(formatter % (number, name, y_hat[0]))
+    print('end selected estimation'.ljust(60, '*'))
+
     print(w_list)
 
     apply_estimate(feature_table, w_list, bias)
@@ -64,12 +68,12 @@ def apply_estimate(feature_table, weight, bias):
         feature_list.append(feature_table[number]['points'])
 
     feature_mat = numpy.matrix(feature_list, dtype=float)
-    print(feature_mat.shape)
 
     w_mat = numpy.matrix(weight)
-    print(w_mat.shape)
 
     y_hat_mat = feature_mat * w_mat + bias
+    print(feature_mat.shape)
+    print(w_mat.shape)
     print(y_hat_mat.shape)
 
     for number, name, y_hat in zip(number_list, name_list, y_hat_mat.tolist()):
