@@ -72,7 +72,7 @@ def print_dict_dict(dict_dict):
 
 def dict_to_string(tuple_key_dict):
     def key_value_to_string(k_v):
-        return ': '.join([match_table.wrap_quote(k_v[0]), k_v[1]])
+        return ': '.join([match_table.wrap_quote_comma(k_v[0]), k_v[1]])
 
     key = tuple_key_dict[0]
     dict = tuple_key_dict[1]
@@ -81,7 +81,7 @@ def dict_to_string(tuple_key_dict):
 
     dict_string = ', '.join(result_list)
 
-    result_string = '{%s: {%s}}' % (match_table.wrap_quote(key), dict_string)
+    result_string = '{%s: {%s}}' % (match_table.wrap_quote_comma(key), dict_string)
 
     return result_string
 
