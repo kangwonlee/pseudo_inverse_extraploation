@@ -144,16 +144,21 @@ def get_quote_format_string(item):
 
 
 def table_dict_list_to_string(table_dict, new_line=chr(10)):
-    result = '{' + new_line
+    def k_v_to_string(k_v):
+        key_string, line_list = k_v
+        return "%s: %s," % (wrap_quote(key_string), line_list)
 
-    for key_string, line_list in table_dict.iteritems():
-        line = "%s: %s," % (wrap_quote(key_string), repr(line_list))
-        result += line + new_line
+    # convert key value pair to string
+    result_list = map(k_v_to_string, table_dict.iteritems())
 
-    result = result[:-1]
-    result += (new_line + '}')
+    # opening and closing of dictionary
+    result_list.insert(0, '{')
+    result_list.append('}')
 
-    return result
+    # assemble result text
+    result_txt = new_line.join(result_list)
+
+    return result_txt
 
 
 def get_row_list(req_line, sep='\t'):
