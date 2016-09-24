@@ -65,6 +65,9 @@ def apply_estimate(feature_table, weight, bias):
     y_hat_mat = feature_mat * w_mat + bias
     print(y_hat_mat.shape)
 
+    for number, name, y_hat in zip(number_list, name_list, y_hat_mat.tolist()):
+        print('%s%s%s%s%g' % (number, TAB, name, TAB, y_hat[0]))
+
     return y_hat_mat
 
 
