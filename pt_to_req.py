@@ -49,6 +49,9 @@ def get_field_array(selected_dict, field_name):
 def apply_estimate(feature_table, weight, bias):
     match_table.print_dict_list(feature_table)
 
+    feature_array = get_field_array(feature_table, 'points')
+    print(feature_array.shape)
+
 
 def estimate(feature_rows, weight, bias):
     feature_mat = numpy.matrix(feature_rows)
