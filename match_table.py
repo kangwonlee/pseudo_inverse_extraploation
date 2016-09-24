@@ -143,8 +143,7 @@ def get_quote_format_string(item):
     return format_string
 
 
-def table_dict_list_to_string(table_dict):
-    new_line = chr(10)
+def table_dict_list_to_string(table_dict, new_line=chr(10)):
     result = '{' + new_line
 
     for key_string, line_list in table_dict.iteritems():
