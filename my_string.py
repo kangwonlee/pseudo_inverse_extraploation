@@ -2,9 +2,9 @@
 # TODO : Make repr of container objects with Korean characters more readable
 
 
-class my_str(unicode):
+class MyStr(unicode):
     def __repr__(self):
-        repr_sample = super(my_str, self).__repr__()
+        repr_sample = super(MyStr, self).__repr__()
         if repr_sample.startswith('"""'):
             quote_string = '"""'
         elif repr_sample.startswith("'''"):
@@ -16,7 +16,7 @@ class my_str(unicode):
         else:
             print("unable to decide quote string")
             assert False
-        return quote_string + super(my_str, self).__str__() + quote_string
+        return quote_string + super(MyStr, self).__str__() + quote_string
 
 
 def die(reason):
