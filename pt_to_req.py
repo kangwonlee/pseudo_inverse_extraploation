@@ -184,10 +184,6 @@ def tab_separate(lines_list):
     return result
 
 
-def print_dict_dict(dict_dict):
-    print(dict_dict_to_string(dict_dict))
-
-
 def dict_to_string(tuple_key_dict):
     def key_value_to_string(k_v):
         return ': '.join([match_table.wrap_quote(k_v[0]), k_v[1]])
