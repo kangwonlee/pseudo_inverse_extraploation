@@ -58,6 +58,14 @@ def build_match_table(req_table, point_table):
     # http://stackoverflow.com/questions/13784192/creating-an-empty-pandas-dataframe-then-filling-it
     match_table = pandas.DataFrame(index=rows, columns=columns)
 
+    print("match_table.shape = %s" % str(match_table.shape))
+
+    for row in match_table.values:
+        print('row '.ljust(40, '*'))
+        print(row)
+        print("row.shape = %s" % str(row.shape))
+        print('end row '.ljust(40, '*'))
+
     print(match_table)
 
     result = {}
