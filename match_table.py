@@ -2,6 +2,9 @@
 import difflib
 
 from table_to_csv import read_txt_lines
+from MyPrettyPrinter import MyPrettyPrinter
+
+mpp = MyPrettyPrinter(width=2075)
 
 TAB = chr(9)
 
@@ -43,8 +46,8 @@ def read_req_table(req_filename):
 
 def print_match_table(match_table, point_table):
     for req_key, value in match_table.iteritems():
-        line_string = make_match_table_row_string(req_key, value, point_table)
-        print(line_string)
+        # mpp.pprint((req_key, value, point_table[req_key]))
+        mpp.pprint((req_key, value))
 
 
 def make_match_table_row_string(req_key, point_list, point_table):
