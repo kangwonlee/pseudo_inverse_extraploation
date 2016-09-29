@@ -4,7 +4,7 @@
 
 class MyStr(unicode):
     def __repr__(self):
-        repr_sample = super(MyStr, self).__repr__()
+        repr_sample = super(MyStr, self).__repr__().strip('u')
         if repr_sample.startswith('"""'):
             quote_string = '"""'
         elif repr_sample.startswith("'''"):
