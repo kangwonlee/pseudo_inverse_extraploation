@@ -16,7 +16,7 @@ class MyStr(unicode):
         else:
             print("unable to decide quote string")
             assert False
-        return quote_string + super(MyStr, self).__str__() + quote_string
+        return '%s%s%s' % (quote_string, self, quote_string)
 
 
 def die(reason):
