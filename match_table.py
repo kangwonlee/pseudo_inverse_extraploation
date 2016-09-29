@@ -4,10 +4,8 @@ import difflib
 import pandas
 
 from MyPrettyPrinter import MyPrettyPrinter
-from table_to_csv import read_txt_lines
 
 mpp = MyPrettyPrinter(width=2075)
-
 TAB = chr(9)
 
 
@@ -41,8 +39,8 @@ def read_point_table(point_filename):
 
 
 def read_req_table(req_filename):
-    req_lines = read_txt_lines(req_filename)
-    req_table = get_req_table(req_lines)
+    req_table = pandas.read_table(req_filename, delimiter=TAB, encoding='cp949', names=(
+        'name', 'req', 'agreement', 'delta',))
     return req_table
 
 
