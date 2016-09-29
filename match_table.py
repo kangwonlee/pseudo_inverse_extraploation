@@ -52,6 +52,14 @@ def print_match_table(match_table, point_table):
 
 
 def build_match_table(req_table, point_table):
+    columns = req_table['name']
+    rows = point_table['name']
+
+    # http://stackoverflow.com/questions/13784192/creating-an-empty-pandas-dataframe-then-filling-it
+    match_table = pandas.DataFrame(index=rows, columns=columns)
+
+    print(match_table)
+
     result = {}
     req_keys = req_table.keys()
     point_keys = point_table.keys()
