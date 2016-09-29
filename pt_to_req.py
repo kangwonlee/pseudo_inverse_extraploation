@@ -13,6 +13,7 @@ TAB, CR = chr(9), chr(10)
 
 def main(match_filename, feature_filename, label_filename):
     # read and prepare matching data
+    # TODO : revise for pandas
     lines = read_txt_lines(match_filename, 'utf8')
     tab_separated_lines = tab_separate(lines)
     transposed_table = match_table_to_dict(tab_separated_lines)

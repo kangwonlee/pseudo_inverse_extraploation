@@ -15,6 +15,7 @@ def main(req_filename, point_filename):
     point_table = read_point_table(point_filename)
 
     # calculate match
+    # TODO : revise for pandas
     match_table = build_match_table(req_table, point_table)
     print_match_table(match_table, point_table)
 
