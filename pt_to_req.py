@@ -4,8 +4,10 @@ import re
 import numpy
 
 import match_table
+from MyPrettyPrinter import MyPrettyPrinter
 from table_to_csv import read_txt_lines
 
+mpp = MyPrettyPrinter()
 TAB, CR = chr(9), chr(10)
 
 
@@ -68,7 +70,7 @@ def get_field_array(selected_dict, field_name):
 
 
 def apply_estimate(feature_table, weight, bias):
-    match_table.print_dict_list(feature_table)
+    mpp.pprint(feature_table)
 
     feature_list, number_list, name_list = [], [], []
 
@@ -180,10 +182,6 @@ def tab_separate(lines_list):
         result.append(line.strip().split(TAB))
 
     return result
-
-
-def print_dict_dict(dict_dict):
-    print(dict_dict_to_string(dict_dict))
 
 
 def dict_to_string(tuple_key_dict):

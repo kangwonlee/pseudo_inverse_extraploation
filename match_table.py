@@ -2,6 +2,9 @@
 import difflib
 
 from table_to_csv import read_txt_lines
+from MyPrettyPrinter import MyPrettyPrinter
+
+mpp = MyPrettyPrinter(width=2075)
 
 TAB = chr(9)
 
@@ -43,27 +46,8 @@ def read_req_table(req_filename):
 
 def print_match_table(match_table, point_table):
     for req_key, value in match_table.iteritems():
-        line_string = make_match_table_row_string(req_key, value, point_table)
-        print(line_string)
-
-
-def make_match_table_row_string(req_key, point_list, point_table):
-    point_list_item_string_list = []
-    for point_list_item in point_list:
-        point_list_item_string_list.append(make_point_list_item_string(point_list_item, point_table))
-
-    point_list_item_string = (TAB + ' ').join(point_list_item_string_list)
-
-    line_string = '%s %s %s' % (req_key, TAB, point_list_item_string)
-    return line_string
-
-
-def make_point_list_item_string(point_list_item, point_table):
-    point_key = point_list_item[1]
-    similarity_point = point_list_item[0]
-    number = point_table[point_key]['number']
-    point_list_item_string = '%s (%s) = %4.2g' % (point_key, number, similarity_point)
-    return point_list_item_string
+        # mpp.pprint((req_key, value, point_table[req_key]))
+        mpp.pprint((req_key, value))
 
 
 def build_match_table(req_table, point_table):
@@ -80,10 +64,6 @@ def build_match_table(req_table, point_table):
         result[req_key] = row_result
 
     return result
-
-
-def print_dict_list(dict):
-    print(table_dict_list_to_string(dict))
 
 
 def similar(string_a, string_b):
@@ -112,16 +92,6 @@ def get_req_table(req_lines):
         # print(str_list_to_string(req_row_list))
 
     return result
-
-
-def str_list_to_string(str_list, sep=', '):
-    result_list = map(wrap_quote, str_list)
-
-    result_txt = sep.join(result_list)
-
-    result_txt_bracket = '[%s]' % result_txt
-
-    return result_txt_bracket
 
 
 def wrap_quote(item):
