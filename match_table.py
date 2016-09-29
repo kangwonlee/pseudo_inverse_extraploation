@@ -1,8 +1,10 @@
 # -*- coding: utf8 -*-
 import difflib
 
-from table_to_csv import read_txt_lines
+import pandas
+
 from MyPrettyPrinter import MyPrettyPrinter
+from table_to_csv import read_txt_lines
 
 mpp = MyPrettyPrinter(width=2075)
 
@@ -32,9 +34,9 @@ def get_point_table_name_key(point_lines):
     return result
 
 
-def read_point_table(point_filename, table_converter=get_point_table_name_key):
-    point_lines = read_txt_lines(point_filename, 'utf8')
-    point_table = table_converter(point_lines)
+def read_point_table(point_filename):
+    point_table = pandas.read_table(point_filename, delimiter=TAB, encoding='utf8', names=(
+        'number', 'type', 'name', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8',))
     return point_table
 
 
