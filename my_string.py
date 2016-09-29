@@ -1,4 +1,7 @@
 # -*- coding: utf8 -*-
+# TODO : Make repr of container objects with Korean characters more readable
+
+
 class my_str(unicode):
     def __repr__(self):
         repr_sample = super(my_str, self).__repr__()
