@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: cp949 -*-
 # TODO : Make repr of container objects with Korean characters more readable
 
 

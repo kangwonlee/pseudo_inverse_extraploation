@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: cp949 -*-
 import unittest
 
 import my_string
@@ -6,9 +6,9 @@ import my_string
 
 class TestMyString(unittest.TestCase):
     def test_repr(self):
-        s = my_string.MyStr('ê°€ë‚˜ë‹¤', encoding='utf8')
+        s = my_string.MyStr('°¡³ª´Ù', encoding='cp949')
         result = repr(s)
-        self.assertEqual("'ê°€ë‚˜ë‹¤'", result)
+        self.assertEqual("'°¡³ª´Ù'", result)
 
 
 if __name__ == '__main__':
