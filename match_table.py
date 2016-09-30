@@ -32,25 +32,6 @@ def read_point_table(point_filename):
     return point_table
 
 
-def get_point_table_name_key(point_lines):
-    result = {}
-    for point_line in point_lines:
-        point_row_list = get_row_list(point_line)
-        result[point_row_list[2]] = {
-            'number': point_row_list[0],
-            'points': point_row_list[3:],
-        }
-        # print(str_list_to_string(point_row_list))
-
-    return result
-
-
-def print_match_table(match_table, point_table):
-    for req_key, value in match_table.iteritems():
-        # mpp.pprint((req_key, value, point_table[req_key]))
-        mpp.pprint((req_key, value))
-
-
 def build_match_table(req_table, point_table):
     columns = req_table['name']
     rows = point_table['name']
@@ -81,6 +62,25 @@ def build_match_table(req_table, point_table):
         result[req_key] = row_result
 
     return result
+
+
+def get_point_table_name_key(point_lines):
+    result = {}
+    for point_line in point_lines:
+        point_row_list = get_row_list(point_line)
+        result[point_row_list[2]] = {
+            'number': point_row_list[0],
+            'points': point_row_list[3:],
+        }
+        # print(str_list_to_string(point_row_list))
+
+    return result
+
+
+def print_match_table(match_table, point_table):
+    for req_key, value in match_table.iteritems():
+        # mpp.pprint((req_key, value, point_table[req_key]))
+        mpp.pprint((req_key, value))
 
 
 def similar(string_a, string_b):
