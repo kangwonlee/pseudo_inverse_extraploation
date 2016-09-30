@@ -22,19 +22,19 @@ def main(req_filename, point_filename):
 
 def read_req_table(req_filename):
     req_table = pandas.read_table(req_filename, delimiter=TAB, encoding='cp949', names=(
-        'name', 'req', 'agreement', 'delta',))
+        'req_name', 'req', 'agreement', 'delta',))
     return req_table
 
 
 def read_point_table(point_filename):
     point_table = pandas.read_table(point_filename, delimiter=TAB, encoding='utf8', names=(
-        'number', 'type', 'name', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8',))
+        'number', 'type', 'point_name', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8',))
     return point_table
 
 
 def build_match_table(req_table, point_table):
-    req_names = req_table['name']
-    point_names = point_table['name']
+    req_names = req_table['req_name']
+    point_names = point_table['point_name']
 
     # http://stackoverflow.com/questions/13784192/creating-an-empty-pandas-dataframe-then-filling-it
     match_table = pandas.DataFrame(index=point_names, columns=req_names)
