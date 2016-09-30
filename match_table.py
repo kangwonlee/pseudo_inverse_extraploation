@@ -20,6 +20,18 @@ def main(req_filename, point_filename):
     print_match_table(match_table, point_table)
 
 
+def read_req_table(req_filename):
+    req_table = pandas.read_table(req_filename, delimiter=TAB, encoding='cp949', names=(
+        'name', 'req', 'agreement', 'delta',))
+    return req_table
+
+
+def read_point_table(point_filename):
+    point_table = pandas.read_table(point_filename, delimiter=TAB, encoding='utf8', names=(
+        'number', 'type', 'name', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8',))
+    return point_table
+
+
 def get_point_table_name_key(point_lines):
     result = {}
     for point_line in point_lines:
@@ -31,18 +43,6 @@ def get_point_table_name_key(point_lines):
         # print(str_list_to_string(point_row_list))
 
     return result
-
-
-def read_point_table(point_filename):
-    point_table = pandas.read_table(point_filename, delimiter=TAB, encoding='utf8', names=(
-        'number', 'type', 'name', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8',))
-    return point_table
-
-
-def read_req_table(req_filename):
-    req_table = pandas.read_table(req_filename, delimiter=TAB, encoding='cp949', names=(
-        'name', 'req', 'agreement', 'delta',))
-    return req_table
 
 
 def print_match_table(match_table, point_table):
