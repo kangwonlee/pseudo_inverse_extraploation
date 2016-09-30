@@ -44,18 +44,6 @@ def build_match_table(req_table, point_table):
         for point_key in point_names:
             s[point_key] = similar(req_key, point_key)
 
-    print("match_table.shape = %s" % str(match_table.shape))
-
-    for row in match_table.values:
-        print('row '.ljust(40, '*'))
-        print(row)
-        print("row.shape = %s" % str(row.shape))
-        print('end row '.ljust(40, '*'))
-
-    print('begin match table '.ljust(60, '='))
-    print(match_table)
-    print('end match table '.ljust(60, '='))
-
     return match_table
 
 
