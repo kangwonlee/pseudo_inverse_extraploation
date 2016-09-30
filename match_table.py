@@ -33,11 +33,16 @@ def read_point_table(point_filename):
 
 
 def build_match_table(req_table, point_table):
-    columns = req_table['name']
-    rows = point_table['name']
+    req_names = req_table['name']
+    point_names = point_table['name']
 
     # http://stackoverflow.com/questions/13784192/creating-an-empty-pandas-dataframe-then-filling-it
-    match_table = pandas.DataFrame(index=rows, columns=columns)
+    match_table = pandas.DataFrame(index=point_names, columns=req_names)
+
+    for req_key in req_names:
+        s = match_table[req_key]
+        for point_key in point_names:
+            s[point_key] = similar(req_key, point_key)
 
     print("match_table.shape = %s" % str(match_table.shape))
 
@@ -47,21 +52,11 @@ def build_match_table(req_table, point_table):
         print("row.shape = %s" % str(row.shape))
         print('end row '.ljust(40, '*'))
 
+    print('begin match table '.ljust(60, '='))
     print(match_table)
+    print('end match table '.ljust(60, '='))
 
-    result = {}
-    req_keys = req_table.keys()
-    point_keys = point_table.keys()
-
-    for req_key in req_keys:
-        row_result = []
-        for point_key in point_keys:
-            row_result.append((similar(req_key, point_key), point_key))
-        row_result.sort()
-        row_result.reverse()
-        result[req_key] = row_result
-
-    return result
+    return match_table
 
 
 def get_point_table_name_key(point_lines):
