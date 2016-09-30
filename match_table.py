@@ -17,6 +17,16 @@ def main(req_filename, point_filename):
     # calculate match
     # TODO : revise for pandas
     match_table = build_match_table(req_table, point_table)
+
+    # indices (== column names) of maximum elements of each row
+    # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.idxmax.html
+    maximum_req_names = match_table.idxmax(axis=1)
+
+    # present indices found
+    print("maximum_req_names ".ljust(60, '+'))
+    print(maximum_req_names)
+    print("end maximum_req_names ".ljust(60, '+'))
+
     print_match_table(match_table, point_table)
 
 
